@@ -10,6 +10,7 @@ class CreateFeedbacksTable extends Migration
         Schema::create('feedbacks', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('status');
             $table->text('description');
             $table->string('category');
             $table->timestamps();

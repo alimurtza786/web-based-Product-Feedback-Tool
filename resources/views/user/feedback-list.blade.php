@@ -12,6 +12,7 @@
 
 <div class="container">
     <h1>Feedbacks</h1>
+    
     <table class="table">
         <thead>
             <tr>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Feedback;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CommentNotificationMail;
 use App\Models\Comment;
 class FeedbackController extends Controller
 {
@@ -22,7 +24,7 @@ class FeedbackController extends Controller
 
     if ($validator->fails()) {
         return redirect()
-            ->route('feedback.create')
+            ->back()
             ->withErrors($validator)
             ->withInput();
     }
@@ -51,13 +53,17 @@ public function commentshow(Request $request, Feedback $feedback)
     ]);
 
     $comment = new Comment();
-    $comment->user_id = auth()->id(); // Assuming you have authentication set up.
+    $comment->user_id = auth()->id();
     $comment->content = $request->input('content');
     $feedback->comments()->save($comment);
-
-    return redirect()->route('feedback.show', ['feedback' => $feedback->id])->with('success', 'Comment added.');
+    $this->sendCommentNotification($comment);
+    return redirect()->route('feedback.show', ['feedback' => $feedback->id])->with('success', 'New Comment added.');
 }
-
+private function sendCommentNotification(Comment $comment)
+{
+    $user = $comment->user;
+    Mail::to($user->email)->send(new CommentNotificationMail($comment));
+}
 
 public function show(Feedback $feedback)
 {

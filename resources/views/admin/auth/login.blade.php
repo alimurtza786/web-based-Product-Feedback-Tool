@@ -25,6 +25,11 @@
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .auth-inner:hover {
+            transform: scale(1.05);
         }
 
         .auth-inner h2 {
@@ -42,6 +47,11 @@
             border-radius: 5px;
             padding: 10px;
             margin-bottom: 15px;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .auth-login-form input:focus {
+            border-color: #007BFF;
         }
 
         .auth-login-form button {
@@ -51,6 +61,7 @@
             border-radius: 5px;
             padding: 10px;
             cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
         }
 
         .auth-login-form button:hover {
